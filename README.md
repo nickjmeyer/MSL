@@ -1,4 +1,1 @@
-# tagged_tuple
-
-An experimental repo to create my own tagged tuple for learning
-purposes.
+# A repo to Mimic some stuff from the Standard Library (MSL)
