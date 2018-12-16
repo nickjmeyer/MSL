@@ -33,7 +33,7 @@ function(njm_add_library)
     set(IS_INTERFACE "INTERFACE")
   endif()
   add_library(${NJM_ADD_LIBRARY_TARGET} ${IS_INTERFACE} ${NJM_ADD_LIBRARY_SOURCES})
-  target_link_libraries(${NJM_ADD_LIBRARY_TARGET} ${NJM_ADD_LIBRARY_LIBS})
+  target_link_libraries(${NJM_ADD_LIBRARY_TARGET} ${IS_INTERFACE} ${NJM_ADD_LIBRARY_LIBS})
   target_include_directories(${NJM_ADD_LIBRARY_TARGET} INTERFACE ${CMAKE_CURRENT_SOURCE_DIR})
 endfunction(njm_add_library)
 

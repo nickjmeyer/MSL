@@ -1,11 +1,13 @@
-#include "../tagged_tuple.hh"
+#include <TaggedTuple.hh>
+#include <TypeTraits.hh>
 #include <gtest/gtest.h>
 
 #include <cstdint>
 
 #include <iostream>
 
-using namespace njm::containers;
+namespace njm::containers
+{
 
 struct X
 {
@@ -15,8 +17,8 @@ struct Y
 {
 };
 
-using XTag = TupleTag<X, float>;
-using YTag = TupleTag<Y, int32_t>;
+using XTag = utility::TaggedType<X, float>;
+using YTag = utility::TaggedType<Y, int32_t>;
 
 using TT = TaggedTuple<XTag, YTag >;
 
@@ -25,3 +27,5 @@ TEST(TaggedTuple, Default)
   TT t{};
   EXPECT_EQ(t.get(X{}), float{});
 }
+
+}  // namespace njm::containers

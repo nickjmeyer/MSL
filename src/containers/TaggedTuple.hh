@@ -5,13 +5,6 @@
 namespace njm::containers
 {
 
-template <class TagType, class ValueType>
-struct TupleTag
-{
-  using Tag = TagType;
-  using Value = ValueType;
-};
-
 template <class... TupleTags>
 class TaggedTuple
 {
