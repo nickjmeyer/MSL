@@ -14,8 +14,13 @@ struct TaggedType
   using Value = ValueType;
 };
 
-template <class... Element>
+template <class... Types>
 struct TypeList
+{
+};
+
+template <auto... Values>
+struct ValueList
 {
 };
 

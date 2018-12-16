@@ -1,16 +1,10 @@
 #include <Variant.hh>
+#include <Literals.hh>
+
 #include <gtest/gtest.h>
 
 namespace njm::containers
 {
-
-struct X
-{
-};
-
-struct Y
-{
-};
 
 template <class Tag>
 class Inspector
@@ -30,7 +24,7 @@ uint32_t Inspector<Tag>::num_destructs{0U};
 
 TEST(Variant, PoDTypes)
 {
-  Variant<utility::TaggedType<X, int32_t>, utility::TaggedType<Y, float>> variant{std::in_place_type<X>, 7};
+  Variant<utility::TaggedType<decltype("X"_s), int32_t>, utility::TaggedType<decltype("Y"_s), float>> variant{std::in_place_type<decltype("X"_s)>, 7};
   EXPECT_EQ(variant.index(), 0);
   visit(variant, [] (auto value)
         {
@@ -39,7 +33,7 @@ TEST(Variant, PoDTypes)
           EXPECT_EQ(value, 7);
         });
 
-  variant.emplace(Y{}, 1.3f);
+  variant.emplace("Y"_s, 1.3f);
 
   EXPECT_EQ(variant.index(), 1);
   visit(variant, [] (auto value)
@@ -53,38 +47,38 @@ TEST(Variant, PoDTypes)
 TEST(Variant, Inspector)
 {
   {
-    Variant<utility::TaggedType<X, Inspector<X>>, utility::TaggedType<Y, Inspector<Y>>> variant{};
-    EXPECT_EQ(Inspector<X>::num_constructs, 1);
-    EXPECT_EQ(Inspector<X>::num_destructs, 0);
-    EXPECT_EQ(Inspector<Y>::num_constructs, 0);
-    EXPECT_EQ(Inspector<Y>::num_destructs, 0);
+    Variant<utility::TaggedType<decltype("X"_s), Inspector<decltype("X"_s)>>, utility::TaggedType<decltype("Y"_s), Inspector<decltype("Y"_s)>>> variant{};
+    EXPECT_EQ(Inspector<decltype("X"_s)>::num_constructs, 1);
+    EXPECT_EQ(Inspector<decltype("X"_s)>::num_destructs, 0);
+    EXPECT_EQ(Inspector<decltype("Y"_s)>::num_constructs, 0);
+    EXPECT_EQ(Inspector<decltype("Y"_s)>::num_destructs, 0);
 
-    variant.emplace(Y{});
+    variant.emplace("Y"_s);
 
-    EXPECT_EQ(Inspector<X>::num_constructs, 1);
-    EXPECT_EQ(Inspector<X>::num_destructs, 1);
-    EXPECT_EQ(Inspector<Y>::num_constructs, 1);
-    EXPECT_EQ(Inspector<Y>::num_destructs, 0);
+    EXPECT_EQ(Inspector<decltype("X"_s)>::num_constructs, 1);
+    EXPECT_EQ(Inspector<decltype("X"_s)>::num_destructs, 1);
+    EXPECT_EQ(Inspector<decltype("Y"_s)>::num_constructs, 1);
+    EXPECT_EQ(Inspector<decltype("Y"_s)>::num_destructs, 0);
 
-    variant.emplace(Y{});
+    variant.emplace("Y"_s);
 
-    EXPECT_EQ(Inspector<X>::num_constructs, 1);
-    EXPECT_EQ(Inspector<X>::num_destructs, 1);
-    EXPECT_EQ(Inspector<Y>::num_constructs, 2);
-    EXPECT_EQ(Inspector<Y>::num_destructs, 1);
+    EXPECT_EQ(Inspector<decltype("X"_s)>::num_constructs, 1);
+    EXPECT_EQ(Inspector<decltype("X"_s)>::num_destructs, 1);
+    EXPECT_EQ(Inspector<decltype("Y"_s)>::num_constructs, 2);
+    EXPECT_EQ(Inspector<decltype("Y"_s)>::num_destructs, 1);
 
-    variant.emplace(X{});
+    variant.emplace("X"_s);
 
-    EXPECT_EQ(Inspector<X>::num_constructs, 2);
-    EXPECT_EQ(Inspector<X>::num_destructs, 1);
-    EXPECT_EQ(Inspector<Y>::num_constructs, 2);
-    EXPECT_EQ(Inspector<Y>::num_destructs, 2);
+    EXPECT_EQ(Inspector<decltype("X"_s)>::num_constructs, 2);
+    EXPECT_EQ(Inspector<decltype("X"_s)>::num_destructs, 1);
+    EXPECT_EQ(Inspector<decltype("Y"_s)>::num_constructs, 2);
+    EXPECT_EQ(Inspector<decltype("Y"_s)>::num_destructs, 2);
   }
 
-  EXPECT_EQ(Inspector<X>::num_constructs, 2);
-  EXPECT_EQ(Inspector<X>::num_destructs, 2);
-  EXPECT_EQ(Inspector<Y>::num_constructs, 2);
-  EXPECT_EQ(Inspector<Y>::num_destructs, 2);
+  EXPECT_EQ(Inspector<decltype("X"_s)>::num_constructs, 2);
+  EXPECT_EQ(Inspector<decltype("X"_s)>::num_destructs, 2);
+  EXPECT_EQ(Inspector<decltype("Y"_s)>::num_constructs, 2);
+  EXPECT_EQ(Inspector<decltype("Y"_s)>::num_destructs, 2);
 }
 
 }  // namespace njm::containers
