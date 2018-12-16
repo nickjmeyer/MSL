@@ -20,10 +20,12 @@ struct DestructorGenerator
   struct Helper
   {
     using Type = typename decltype(utility::get_type_at_index(std::integral_constant<IntegerType, INDEX>{}, utility::TypeList<ElementTypes...>{}))::Type;
+    using Tag = typename Type::Tag;
+    using Value = typename Type::Value;
 
     static constexpr void function(Variant<ElementTypes...>& variant)
     {
-      variant.template get<Type>().~Type();
+      variant.template get(Tag{}).~Value();
     }
   };
 };
@@ -57,7 +59,7 @@ class Variant
 {
  private:
     template <class IntegerType, IntegerType INDEX>
-    using DestructorHelper = typename DestructorGenerator<typename VariantTags::Value...>::template Helper<IntegerType, INDEX>;
+    using DestructorHelper = typename DestructorGenerator<VariantTags...>::template Helper<IntegerType, INDEX>;
  public:
   template <class Tag, class... Args>
   Variant(std::in_place_type_t<Tag>, Args&&... args)
@@ -75,6 +77,7 @@ class Variant
 
   ~Variant()
   {
+    destruct();
   }
 
   template <class Tag>
@@ -118,22 +121,16 @@ class Variant
   void destruct()
   {
     using JT = utility::JumpTable<DestructorHelper, size_t, 0U, sizeof...(VariantTags)>;
-    JT::call(index());
+    if (index_ < sizeof...(VariantTags))
+    {
+      JT::call(index(), *this);
+      index_ = sizeof...(VariantTags);
+    }
   }
 
   size_t index()
   {
     return index_;
-  }
-
-  template <class Tag, class... Args>
-  void construct(Tag, Args&&... args)
-  {
-    using Value = utility::TypeForTag<Tag, VariantTags...>;
-
-    new (pointer(Tag{})) Value{std::forward<Args>(args)...};
-
-    index_ = index_of(Tag{},utility::TypeList<typename VariantTags::Tag...>{});
   }
 
   template <class Tag, class... Args>
@@ -145,6 +142,16 @@ class Variant
   }
 
  private:
+  template <class Tag, class... Args>
+  void construct(Tag, Args&&... args)
+  {
+    using Value = utility::TypeForTag<Tag, VariantTags...>;
+
+    new (pointer(Tag{})) Value{std::forward<Args>(args)...};
+
+    index_ = index_of(Tag{},utility::TypeList<typename VariantTags::Tag...>{});
+  }
+
   size_t index_;
   std::aligned_storage<utility::max(sizeof(typename VariantTags::Value)...), utility::max(alignof(typename VariantTags::Value)...)> bytes_;
 };
