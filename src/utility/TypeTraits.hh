@@ -89,9 +89,9 @@ template <class Tag, class... Tags, size_t... Ints>
 constexpr decltype(auto) index_of(Tag, TypeList<Tags...>, std::index_sequence<Ints...>)
 {
   return typename decltype(to_type_wrapper((std::conditional_t<
-                                           std::is_same_v<Tag, Tags>,
-                                           TypeList<std::integral_constant<size_t, Ints>>,
-                                            TypeList<>>{} + ...)))::Type::value();
+                                            std::is_same_v<Tag, Tags>,
+                                            TypeList<std::integral_constant<size_t, Ints>>,
+                                            TypeList<>>{} + ...)))::Type{};
 }
 
 }  // namespace impl

@@ -40,7 +40,7 @@ struct VisitorGenerator
     static constexpr decltype(auto) function(VariantType&& variant, VisitorType&& visitor)
     {
       static_assert(std::is_same_v<Variant<ElementTypes...>, std::decay_t<VariantType>>);
-      return visitor(variant.template get<Type>());
+      return visitor(variant.get(typename Type::Tag{}));
     }
   };
 };
@@ -132,6 +132,8 @@ class Variant
     using Value = utility::TypeForTag<Tag, VariantTags...>;
 
     new (pointer(Tag{})) Value{std::forward<Args>(args)...};
+
+    index_ = index_of(Tag{},utility::TypeList<typename VariantTags::Tag...>{});
   }
 
   template <class Tag, class... Args>
