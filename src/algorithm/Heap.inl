@@ -23,7 +23,7 @@ Iter heapify_one_position(Iter begin, Iter end, Iter position, Comp comp)
   {
     if (comp(*left, *position))
     {
-      std::iterswap(left, position);
+      std::iter_swap(left, position);
       return left;
     }
     return position;
@@ -34,7 +34,7 @@ Iter heapify_one_position(Iter begin, Iter end, Iter position, Comp comp)
 
   if (comp(*cand, *position))
   {
-    std::iterswap(cand, position);
+    std::iter_swap(cand, position);
     return cand;
   }
 
@@ -50,7 +50,7 @@ void heapify(Iter begin, Iter end, Iter position, Comp comp)
   do
   {
     next_position = position;
-    position = impl::heapify_one_position(begin, iter, next_position, comp);
+    position = impl::heapify_one_position(begin, end, next_position, comp);
   } while(next_position != position);
 }
 
@@ -75,7 +75,7 @@ void pop_heap(Iter begin, Iter end, Comp comp)
   }
 
   --end;
-  std::iterswap(begin, end);
+  std::iter_swap(begin, end);
   heapify(begin, begin, end, comp);
 }
 
@@ -87,7 +87,7 @@ void push_heap(Iter begin, Iter end, Comp comp)
   {
     --position;
     auto n = (std::distance(begin, position) - 1) / 2;
-    postion = begin + n;
+    position = begin + n;
     heapify(begin, end, position, comp);
   }
 }
