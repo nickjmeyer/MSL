@@ -1,4 +1,4 @@
-#include <JumpTable.hh>
+#include "src/utility/JumpTable.hh"
 #include <gtest/gtest.h>
 
 namespace njm::utility
