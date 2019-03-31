@@ -1,1 +1,0 @@
-/usr/bin/c++     CMakeFiles/HeapTest.dir/HeapTest.cc.o  -o HeapTest ../../../libNJM_GOOGLE_TEST.a ../../../lib/libgtest.a -lpthread 

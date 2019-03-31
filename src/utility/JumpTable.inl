@@ -1,4 +1,3 @@
-#include <TypeTraits.hh>
 #include <array>
 
 namespace njm::utility
@@ -20,7 +19,6 @@ namespace impl
 template <class CallableType, class IntegerType, IntegerType Start, IntegerType... Sequence>
 constexpr decltype(auto) generate_functions_helper(std::integer_sequence<IntegerType, Sequence...>) noexcept
 {
-  using FunctionType = decltype(CallableType::template call<Start>);
   static_assert(all_same_type(TypeList<decltype(CallableType::template call<Start+Sequence>)...>{}));
 
   return std::array{CallableType::template call<Start+Sequence>...};

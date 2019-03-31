@@ -1,6 +1,6 @@
 #pragma once
 
-#include <TypeTraits.hh>
+#include "src/utility/TypeTraits.hh"
 
 #include <utility>
 #include <cstddef>
@@ -38,4 +38,4 @@ struct JTHelper
 
 }
 
-#include <JumpTable.inl>
+#include "src/utility/JumpTable.inl"

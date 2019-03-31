@@ -1,6 +1,6 @@
 #pragma once
 
-#include <TypeTraits.hh>
+#include "src/utility/TypeTraits.hh"
 
 namespace njm
 {
