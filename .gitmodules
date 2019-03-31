@@ -1,3 +1,6 @@
 [submodule "googletest"]
 	path = googletest
 	url = git@github.com:abseil/googletest
+[submodule "googlebenchmark"]
+	path = googlebenchmark
+	url = https://github.com/google/benchmark.git
