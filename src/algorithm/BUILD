@@ -1,5 +1,8 @@
 cc_library(
-  name = "algorithm",
-  hdrs = ["Heap.hh", "Heap.inl"],
-  visibility = ["//visibility:public"]
+    name = "algorithm",
+    hdrs = ["Heap.hh",
+            "Heap.inl",
+            "AdjacentPairRemoval.hh",
+            "AdjacentPairRemoval.inl"],
+    visibility = ["//visibility:public"]
 )
