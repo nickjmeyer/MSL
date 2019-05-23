@@ -11,3 +11,10 @@ cc_test(
   deps = ["//src/algorithm:algorithm",
   "@googletest//:gtest_main"]
 )
+
+cc_test(
+  name = "PartitionTest",
+  srcs = ["PartitionTest.cc"],
+  deps = ["//src/algorithm:algorithm",
+  "@googletest//:gtest_main"]
+)
