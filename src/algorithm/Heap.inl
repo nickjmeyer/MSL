@@ -1,4 +1,3 @@
-#include <algorithm>
 #include <iterator>
 
 namespace njm::algorithm
@@ -55,7 +54,7 @@ void heapify(Iter begin, Iter end, Iter position, Comp comp)
 }
 
 template <class Iter, class Comp>
-void make_heap(Iter begin, Iter end, Iter comp)
+void make_heap(Iter begin, Iter end, Comp comp)
 {
   Iter position{end};
   while(position != begin)

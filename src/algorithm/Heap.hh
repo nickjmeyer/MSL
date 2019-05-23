@@ -1,6 +1,6 @@
 #pragma once
 
-namespace njm::algorithms
+namespace njm::algorithm
 {
 
 namespace impl
@@ -23,6 +23,6 @@ void pop_heap(Iter begin, Iter end, Comp comp);
 template <class Iter, class Comp>
 void push_heap(Iter begin, Iter end, Comp comp);
 
-}  // namespace njm::algorithms
+}  // namespace njm::algorithm
 
-#include "Heap.inl"
+#include "src/algorithm/Heap.inl"

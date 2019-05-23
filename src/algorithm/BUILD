@@ -5,6 +5,8 @@ cc_library(
             "AdjacentPairRemoval.hh",
             "AdjacentPairRemoval.inl",
             "Partition.hh",
-            "Partition.inl"]
+            "Partition.inl",
+            "NthElement.hh",
+            "NthElement.inl"],
     visibility = ["//visibility:public"]
 )
