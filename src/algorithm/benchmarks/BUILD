@@ -3,3 +3,12 @@ cc_binary(
   srcs = ["AdjacentPairRemovalBenchmark.cc"],
   deps = ["//src/algorithm:algorithm", "@googlebenchmark//:benchmark"],
 )
+
+cc_binary(
+  name = "PartitionBenchmark",
+  srcs = ["PartitionBenchmark.cc"],
+  deps = [
+  "//src/algorithm:algorithm",
+  "@googlebenchmark//:benchmark"
+  ],
+)

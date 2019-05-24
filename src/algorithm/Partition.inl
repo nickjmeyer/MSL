@@ -10,17 +10,14 @@ constexpr Iterator partition(Iterator begin, Iterator end, UnaryPredicate predic
 {
   while (begin != end)
   {
-    while (begin != end && predicate(*begin))
-    {
-      ++begin;
-    }
-    while(begin != end && !predicate(*std::prev(end)))
-    {
-      --end;
-    }
-    if (begin != end && !predicate(*begin))
+    if (!predicate(*begin))
     {
       std::iter_swap(begin, std::prev(end));
+      --end;
+    }
+    else
+    {
+      ++begin;
     }
   }
   return begin;
