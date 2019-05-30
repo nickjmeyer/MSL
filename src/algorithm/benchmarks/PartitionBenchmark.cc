@@ -53,7 +53,21 @@ void std_algorithm_benchmark(benchmark::State& state)
   }
 }
 
-BENCHMARK(njm_algorithm_benchmark)->Range(8, 1 << 24);
-BENCHMARK(std_algorithm_benchmark)->Range(8, 1 << 24);
+double compute_max(const std::vector<double>&v)
+{
+  return *std::max_element(std::begin(v), std::end(v));
+}
+
+BENCHMARK(njm_algorithm_benchmark)
+->Range(8, 1 << 24)
+->Repetitions(10)
+->ReportAggregatesOnly(true)
+->ComputeStatistics("max", compute_max);
+
+BENCHMARK(std_algorithm_benchmark)
+->Range(8, 1 << 24)
+->Repetitions(10)
+->ReportAggregatesOnly(true)
+->ComputeStatistics("max", compute_max);
 
 BENCHMARK_MAIN();
